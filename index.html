@@ -957,7 +957,17 @@ function showChoices(choices){
       if(ch.DEATH_CHOICE)ST.deathCount++;
       if(ch.IGN)ST.ignoreCount++;
       if(ch.CORE)ST.coreCount++;
-      runSeg(ch.n);
+      // 選択肢テキストを必ずチャットに表示してからセグメント実行
+      addMsg('player', ch.x);
+      const seg=S[ch.n];
+      if(!seg){console.warn('Missing seg:',ch.n);return;}
+      // 遷移先の先頭が同じpステップなら重複しないようスキップ
+      const firstStep=seg[0];
+      if(firstStep && firstStep.t==='p' && firstStep.x===ch.x){
+        segQ=seg;segI=1;nextStep();
+      } else {
+        runSeg(ch.n);
+      }
     };
     area.appendChild(btn);
   });
