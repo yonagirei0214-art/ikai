@@ -331,7 +331,7 @@ m5b:[{t:'p',x:'でも心配してくれてる'},{t:'n',x:'心配。……そう'
 m5c:[{t:'p',x:'……少し気になる'},{t:'n',x:'……そう'},{t:'n',x:'じゃあ、コメント欄を信じる？　わたしより？'},{t:'nx',n:'m6'}],
 m6:[
   {t:'n',x:'ねえ、今どこにいる？'},
-  {t:'c',c:[{x:'家にいる',n:'mdead',DEATH_CHOICE:true},{x:'教えたくない',n:'m6b'},{x:'なんで知りたいの？',n:'m6c',CORE:true}]},
+  {t:'c',c:[{x:'家にいる',n:'mdead'},{x:'教えたくない',n:'m6b'},{x:'なんで知りたいの？',n:'m6c',CORE:true}]},
 ],
 mdead:[
   {t:'p',x:'家にいる'},
@@ -566,7 +566,7 @@ z3c:[{t:'p',x:'あなたがいる場所？'},{t:'n',x:'……そうです\nよ�
 z4:[
   {t:'cm',k:'zw'},
   {t:'n',x:'……コメント欄\n無言でいいでしょうか'},
-  {t:'c',c:[{x:'振り返っちゃダメだよ',n:'z4a',s:{zero:1}},{x:'なんて書いてある？',n:'z4b',s:{zero:0}},{x:'後ろ、確認してみる',n:'zdead',DEATH_CHOICE:true}]},
+  {t:'c',c:[{x:'振り返っちゃダメだよ',n:'z4a',s:{zero:1}},{x:'なんて書いてある？',n:'z4b',s:{zero:0}},{x:'後ろ、確認してみる',n:'zdead'}]},
 ],
 z4a:[{t:'p',x:'振り返っちゃダメだよ'},{t:'n',x:'……ありがとうございます\nあなたは、わかっているのですね'},{t:'nx',n:'z5'}],
 z4b:[{t:'p',x:'なんて書いてある？'},{t:'n',x:'……「振り返るな」と\nそう書いてあります'},{t:'nx',n:'z5'}],
@@ -839,7 +839,7 @@ function startRoute(ch){
 
 function startFinal(){
   // Secret end checks
-  if(ST.deathCount>=6){showEndScreen(FINAL_ENDS.s_alldead);return;}
+  if(ST.deathCount>=3){showEndScreen(FINAL_ENDS.s_alldead);return;}
   if(ST.ignoreCount>=6){showEndScreen(FINAL_ENDS.s_ignore);return;}
   if(ST.coreCount>=6){showEndScreen(FINAL_ENDS.s_core);return;}
   ST.currentChar={name:'異界放送局',tag:'最終章',emoji:'📡',id:'final'};
@@ -990,7 +990,7 @@ function handleBadEnd(step){
   if(step.DEATH)ST.deathCount++;
   if(ST.currentChar){const c=ST.charState.find(x=>x.id===ST.currentChar.id);if(c)c.completed=true;}
   // unlock next
-  const order=['hitori','kyoya','meri','riana','zero','nene'];
+  const order=['hitori','meri','riana','kyoya','zero','nene'];
   const idx=order.indexOf(ST.currentChar?.id);
   if(idx>=0&&idx<order.length-1){const nc=ST.charState.find(x=>x.id===order[idx+1]);if(nc)nc.unlocked=true;}
   setTimeout(()=>{
